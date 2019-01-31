@@ -2,6 +2,21 @@ body, html {
   background-color: #4a4a4a;
 }
 
-h1 {
+.title h1 {
   color: white;
+}
+
+.navbar {
+  height: 0rem;
+}
+
+.timer {
+  text-align: center;
+  font-size: 10rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.flex {
+  display: flex;
 }

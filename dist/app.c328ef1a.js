@@ -24527,7 +24527,7 @@ function (_Component) {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, _react.default.createElement("h1", {
-        className: "Title"
+        className: "title is-1"
       }, this.props.msg[0]));
     }
   }]);
@@ -24650,7 +24650,7 @@ function (_Component) {
       return _react.default.createElement("div", null, _react.default.createElement("button", {
         className: "button is-primary is-rounded",
         onClick: function onClick() {
-          _this.props.changeSession(_this.props.session - 1);
+          return _this.props.changeSession(_this.props.session - 1);
         }
       }, "-1"), _react.default.createElement("button", {
         className: "button is-link is-rounded",
@@ -24658,7 +24658,7 @@ function (_Component) {
       }, this.props.start), _react.default.createElement("button", {
         className: "button is-primary is-rounded",
         onClick: function onClick() {
-          _this.props.changeSession(_this.props.session + 1);
+          return _this.props.changeSession(_this.props.session + 1);
         }
       }, "+1"));
     }
@@ -24724,15 +24724,18 @@ function (_Component) {
         className: "modal-card-title"
       }, "Timer's ended"), _react.default.createElement("button", {
         className: "delete",
-        "aria-label": "close"
+        "aria-label": "close",
+        onClick: this.props.close
       })), _react.default.createElement("section", {
         className: "modal-card-body"
       }, _react.default.createElement("p", null, "Have a break !")), _react.default.createElement("footer", {
         className: "modal-card-foot"
       }, _react.default.createElement("button", {
-        className: "button is-success"
-      }, "Launch break's timer"), _react.default.createElement("button", {
-        className: "button"
+        className: "button is-success",
+        onClick: this.props.restart
+      }, "Restart"), _react.default.createElement("button", {
+        className: "button",
+        onClick: this.props.close
       }, "Cancel"))));
     }
   }]);
@@ -24806,7 +24809,7 @@ function (_Component) {
       toggle: true,
       // for the start/reset button toggle
       content: 'Start',
-      // content of the button
+      // content text of the button
       progress: 100,
       // for the progress bar max
       inProgress: 100,
@@ -24820,6 +24823,8 @@ function (_Component) {
     _this.resetTimer = _this.resetTimer.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.changeSession = _this.changeSession.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.toggleEvent = _this.toggleEvent.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.restart = _this.restart.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.closeModal = _this.closeModal.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -24897,12 +24902,7 @@ function (_Component) {
   }, {
     key: "alertEndTime",
     value: function alertEndTime() {
-      if (this.seconds < 50) {
-        var sound = new Audio('../../assets/sound/Electric alarm clock sound effect.mp3');
-        sound.play();
-      }
-
-      if (this.seconds < 1) {
+      if (this.seconds < 58) {
         this.resetTimer();
         this.setState({
           endTime: 'modal is-active'
@@ -24910,27 +24910,47 @@ function (_Component) {
       }
     }
   }, {
+    key: "closeModal",
+    value: function closeModal() {
+      this.setState({
+        endTime: 'modal',
+        toggle: true
+      });
+      this.toggleEvent();
+    }
+  }, {
+    key: "restart",
+    value: function restart() {
+      this.closeModal();
+      this.startTimer();
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        className: "App container"
-      }, _react.default.createElement(_Header.default, null), _react.default.createElement(_Title.default, {
+        className: "App"
+      }, _react.default.createElement("div", null, _react.default.createElement(_Header.default, null)), _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement(_Title.default, {
         msg: this.state.message
       }), _react.default.createElement("div", {
-        className: "section box"
-      }, _react.default.createElement("p", null, this.state.minutesLeft, " : ", this.state.secondsLeft), _react.default.createElement(_Button.default, {
+        className: "section box flex"
+      }, _react.default.createElement("p", {
+        className: "subtitle timer"
+      }, this.state.minutesLeft, " : ", this.state.secondsLeft), _react.default.createElement(_Button.default, {
         session: this.state.session,
         changeSession: this.changeSession,
         toggleEvent: this.toggleEvent,
-        toggle: this.state.toggle,
         start: this.state.content
       }), _react.default.createElement("progress", {
         className: "progress is-medium is-danger",
         value: this.inProgress,
         max: this.progress
-      }), _react.default.createElement("div", null, this.state.audio), _react.default.createElement(_Modal.default, {
-        end: this.state.endTime
-      })));
+      }), _react.default.createElement(_Modal.default, {
+        end: this.state.endTime,
+        restart: this.restart,
+        close: this.closeModal
+      }))));
     }
   }]);
 

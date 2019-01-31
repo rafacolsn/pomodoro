@@ -9,7 +9,7 @@ export default class Title extends Component {
     render() {
         return (
             <div>
-                <h1 className="Title">{this.props.msg[0]}</h1>
+                <h1 className="title is-1">{this.props.msg[0]}</h1>
             </div>
         )
     }

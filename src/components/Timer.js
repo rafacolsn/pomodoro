@@ -15,7 +15,7 @@ export default class Timer extends Component {
       secondsLeft: '00', // will be used to display in a range of 60
       minutesLeft: 20, // default value
       toggle: true, // for the start/reset button toggle
-      content: 'Start', // content of the button
+      content: 'Start', // content text of the button
       progress: 100, // for the progress bar max
       inProgress: 100, // for the progress bar value
       message: [
@@ -32,6 +32,8 @@ export default class Timer extends Component {
     this.resetTimer = this.resetTimer.bind(this);
     this.changeSession = this.changeSession.bind(this);
     this.toggleEvent = this.toggleEvent.bind(this);
+    this.restart = this.restart.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   decreaseSeconds() { //decrement seconds
@@ -87,11 +89,7 @@ export default class Timer extends Component {
   }
 
   alertEndTime() {
-    if (this.seconds < 50) {
-      const sound = new Audio('../../assets/sound/Electric alarm clock sound effect.mp3');
-      sound.play();
-    }
-    if (this.seconds < 1) {
+    if (this.seconds < 58) {
       this.resetTimer();
       this.setState({
         endTime: 'modal is-active'
@@ -99,19 +97,32 @@ export default class Timer extends Component {
     }
   }
 
+  closeModal() {
+    this.setState({
+      endTime: 'modal',
+      toggle: true
+    });
+    this.toggleEvent();
+  }
+
+  restart() {
+    this.closeModal();
+    this.startTimer();
+  }
+
   render() {
     return (
-      <div className="App container">
-        <Header />
-        <Title msg={this.state.message} />
-        <div className="section box">
-          <p>{this.state.minutesLeft} : {this.state.secondsLeft}</p>
-          <Button session={this.state.session} changeSession={this.changeSession} toggleEvent={this.toggleEvent} toggle={this.state.toggle} start={this.state.content} />
-          <progress className="progress is-medium is-danger" value={this.inProgress} max={this.progress}></progress>
-          <div>{this.state.audio}</div>
-          <Modal end={this.state.endTime} />
+      <div className="App">
+        <div><Header /></div>
+        <div className="container">
+          <Title msg={this.state.message} />
+          <div className="section box flex">
+            <p className="subtitle timer" >{this.state.minutesLeft} : {this.state.secondsLeft}</p>
+            <Button session={this.state.session} changeSession={this.changeSession} toggleEvent={this.toggleEvent} start={this.state.content} />
+            <progress className="progress is-medium is-danger" value={this.inProgress} max={this.progress}></progress>
+            <Modal end={this.state.endTime} restart={this.restart} close={this.closeModal} />
+          </div>
         </div>
-
       </div>
     );
   }

@@ -3,6 +3,18 @@ $bg : hsl(0, 0%, 29%);
 body, html {
     background-color: $bg;
 }
-h1 {
+.title h1 {
     color: white;
+}
+.navbar {
+    height: 0rem;
+}
+.timer {
+    text-align: center;
+    font-size: 10rem;
+    display: flex;
+    flex-direction: row;
+}
+.flex {
+    display: flex;
 }
