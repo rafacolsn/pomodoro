@@ -3,18 +3,31 @@ $bg : hsl(0, 0%, 29%);
 body, html {
     background-color: $bg;
 }
-.title h1 {
-    color: white;
+.my-title {
+    padding-left: 5rem;
+    color: whitesmoke;
 }
 .navbar {
     height: 0rem;
+    margin-bottom: 3rem;
 }
 .timer {
-    text-align: center;
+    justify-content: center;
+    color: white;
     font-size: 10rem;
     display: flex;
     flex-direction: row;
 }
-.flex {
-    display: flex;
+.center {
+    justify-content: center;
+    text-align: center;
+}
+.bar {
+    margin: 1rem auto;
+}
+.is-ancestor {
+    margin-top: 3rem!important;
+}
+.my-btn {
+    justify-content: middle;
 }

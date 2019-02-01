@@ -116,11 +116,19 @@ export default class Timer extends Component {
         <div><Header /></div>
         <div className="container">
           <Title msg={this.state.message} />
-          <div className="section box flex">
-            <p className="subtitle timer" >{this.state.minutesLeft} : {this.state.secondsLeft}</p>
-            <Button session={this.state.session} changeSession={this.changeSession} toggleEvent={this.toggleEvent} start={this.state.content} />
-            <progress className="progress is-medium is-danger" value={this.inProgress} max={this.progress}></progress>
-            <Modal end={this.state.endTime} restart={this.restart} close={this.closeModal} />
+          <div className="tile is-ancestor center">
+            <div className="tile is-parent is-vertical notification is-warning is-10" >
+              <div className="tile center">
+                <div className="tile is-child notification is-danger is-8">
+                  <p className="subtitle timer" >{this.state.minutesLeft} : {this.state.secondsLeft}</p>
+                </div>
+                <Button session={this.state.session} changeSession={this.changeSession} toggleEvent={this.toggleEvent} start={this.state.content} />
+              </div>
+              <div className="tile bar is-parent notification is-10">
+                <progress className="progress is-medium is-danger" value={this.inProgress} max={this.progress}></progress>
+              </div>
+              <Modal end={this.state.endTime} restart={this.restart} close={this.closeModal} />
+            </div>
           </div>
         </div>
       </div>

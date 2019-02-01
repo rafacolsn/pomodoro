@@ -24526,9 +24526,9 @@ function (_Component) {
   _createClass(Title, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("h1", {
-        className: "title is-1"
-      }, this.props.msg[0]));
+      return _react.default.createElement("div", {
+        className: "title is-1 my-title"
+      }, _react.default.createElement("h1", null, this.props.msg[0]));
     }
   }]);
 
@@ -24647,8 +24647,10 @@ function (_Component) {
     value: function render() {
       var _this = this;
 
-      return _react.default.createElement("div", null, _react.default.createElement("button", {
-        className: "button is-primary is-rounded",
+      return _react.default.createElement("div", {
+        className: "tile is-child my-btn is-2 notification"
+      }, _react.default.createElement("button", {
+        className: "button center is-light is-rounded",
         onClick: function onClick() {
           return _this.props.changeSession(_this.props.session - 1);
         }
@@ -24656,7 +24658,7 @@ function (_Component) {
         className: "button is-link is-rounded",
         onClick: this.props.toggleEvent
       }, this.props.start), _react.default.createElement("button", {
-        className: "button is-primary is-rounded",
+        className: "button center is-light is-rounded",
         onClick: function onClick() {
           return _this.props.changeSession(_this.props.session + 1);
         }
@@ -24934,23 +24936,31 @@ function (_Component) {
       }, _react.default.createElement(_Title.default, {
         msg: this.state.message
       }), _react.default.createElement("div", {
-        className: "section box flex"
+        className: "tile is-ancestor center"
+      }, _react.default.createElement("div", {
+        className: "tile is-parent is-vertical notification is-warning is-10"
+      }, _react.default.createElement("div", {
+        className: "tile center"
+      }, _react.default.createElement("div", {
+        className: "tile is-child notification is-danger is-8"
       }, _react.default.createElement("p", {
         className: "subtitle timer"
-      }, this.state.minutesLeft, " : ", this.state.secondsLeft), _react.default.createElement(_Button.default, {
+      }, this.state.minutesLeft, " : ", this.state.secondsLeft)), _react.default.createElement(_Button.default, {
         session: this.state.session,
         changeSession: this.changeSession,
         toggleEvent: this.toggleEvent,
         start: this.state.content
-      }), _react.default.createElement("progress", {
+      })), _react.default.createElement("div", {
+        className: "tile bar is-parent notification is-10"
+      }, _react.default.createElement("progress", {
         className: "progress is-medium is-danger",
         value: this.inProgress,
         max: this.progress
-      }), _react.default.createElement(_Modal.default, {
+      })), _react.default.createElement(_Modal.default, {
         end: this.state.endTime,
         restart: this.restart,
         close: this.closeModal
-      }))));
+      })))));
     }
   }]);
 
@@ -25071,7 +25081,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38781" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41811" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
