@@ -3,6 +3,8 @@ import Title from './Title';
 import Header from './Header';
 import Button from './Button';
 import Modal from './Modal';
+import Sound from './Sound';
+import Audio from '../../assets/sound/Electric alarm clock sound effect.mp3';
 
 export default class Timer extends Component {
 
@@ -24,7 +26,6 @@ export default class Timer extends Component {
         'Good Work ! Time left... ',
       ],
       endTime: 'modal',
-      audio: ''
     }
 
     // these functions are bound to be called in children components
@@ -96,7 +97,7 @@ export default class Timer extends Component {
   }
 
   alertEndTime() {
-    if (this.seconds < 115 && this.state.toggle == false) {
+    if (this.seconds < 1 && this.state.toggle == false) {
       this.resetTimer();
       this.setState({
         endTime: 'modal is-active'
@@ -129,13 +130,13 @@ export default class Timer extends Component {
     else {
       msg = this.state.message[1];
     }
-
     return (
 
       <div className="App">
         <div><Header /></div>
         <div className="container">
           <Title msg={msg} />
+          {this.seconds < 6 ? <Sound source={Audio} /> : ''}
           <div className="tile is-ancestor center">
             <div className="tile is-parent is-vertical notification is-warning is-10" >
               <div className="tile center">

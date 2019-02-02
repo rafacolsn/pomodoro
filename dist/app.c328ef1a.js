@@ -24652,12 +24652,13 @@ function (_Component) {
       var up;
       var down;
       this.props.toggle ? up = _react.default.createElement("button", {
-        className: "button btn is-primary center is-light is-rounded",
+        className: "button btn is-primary center is-rounded",
         onClick: function onClick() {
           return _this.props.changeSession(_this.props.session + 1);
         }
       }, "+1") : up = _react.default.createElement("button", {
-        className: "button btn is-danger center is-light is-rounded"
+        className: "button btn is-primary center is-rounded",
+        disabled: true
       }, "+1");
       this.props.toggle ? down = _react.default.createElement("button", {
         className: "button btn is-primary center is-light is-rounded",
@@ -24665,7 +24666,8 @@ function (_Component) {
           return _this.props.changeSession(_this.props.session - 1);
         }
       }, "-1") : down = _react.default.createElement("button", {
-        className: "button btn is-danger center is-light is-rounded"
+        className: "button btn is-primary center is-light is-rounded",
+        disabled: true
       }, "-1");
       return _react.default.createElement("div", {
         className: "tile is-child my-btns is-2 notification"
@@ -24756,7 +24758,30 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Modal;
-},{"react":"../node_modules/react/index.js"}],"components/Timer.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"components/Sound.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+var _default = function _default(props) {
+  return _react.default.createElement("audio", {
+    src: props.source,
+    autoPlay: true,
+    type: "audio/mp3"
+  });
+};
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"../assets/sound/Electric alarm clock sound effect.mp3":[function(require,module,exports) {
+module.exports = "/Electric alarm clock sound effect.59de839d.mp3";
+},{}],"components/Timer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -24773,6 +24798,10 @@ var _Header = _interopRequireDefault(require("./Header"));
 var _Button = _interopRequireDefault(require("./Button"));
 
 var _Modal = _interopRequireDefault(require("./Modal"));
+
+var _Sound = _interopRequireDefault(require("./Sound"));
+
+var _ElectricAlarmClockSoundEffect = _interopRequireDefault(require("../../assets/sound/Electric alarm clock sound effect.mp3"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24830,8 +24859,7 @@ function (_Component) {
       inProgress: 100,
       // for the progress bar value
       message: ['Start a work session', 'Good Work ! Time left... '],
-      endTime: 'modal',
-      audio: '' // these functions are bound to be called in children components
+      endTime: 'modal' // these functions are bound to be called in children components
 
     };
     _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -24925,7 +24953,7 @@ function (_Component) {
   }, {
     key: "alertEndTime",
     value: function alertEndTime() {
-      if (this.seconds < 115 && this.state.toggle == false) {
+      if (this.seconds < 1 && this.state.toggle == false) {
         this.resetTimer();
         this.setState({
           endTime: 'modal is-active'
@@ -24971,7 +24999,9 @@ function (_Component) {
         className: "container"
       }, _react.default.createElement(_Title.default, {
         msg: msg
-      }), _react.default.createElement("div", {
+      }), this.seconds < 6 ? _react.default.createElement(_Sound.default, {
+        source: _ElectricAlarmClockSoundEffect.default
+      }) : '', _react.default.createElement("div", {
         className: "tile is-ancestor center"
       }, _react.default.createElement("div", {
         className: "tile is-parent is-vertical notification is-warning is-10"
@@ -25005,7 +25035,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Timer;
-},{"react":"../node_modules/react/index.js","./Title":"components/Title.js","./Header":"components/Header.js","./Button":"components/Button.js","./Modal":"components/Modal.js"}],"../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Title":"components/Title.js","./Header":"components/Header.js","./Button":"components/Button.js","./Modal":"components/Modal.js","./Sound":"components/Sound.js","../../assets/sound/Electric alarm clock sound effect.mp3":"../assets/sound/Electric alarm clock sound effect.mp3"}],"../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -25118,7 +25148,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43739" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36911" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
