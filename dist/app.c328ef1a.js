@@ -24528,7 +24528,7 @@ function (_Component) {
     value: function render() {
       return _react.default.createElement("div", {
         className: "title is-1 my-title"
-      }, _react.default.createElement("h1", null, this.props.msg[0]));
+      }, _react.default.createElement("h2", null, this.props.msg));
     }
   }]);
 
@@ -24593,7 +24593,9 @@ function (_Component) {
       }, _react.default.createElement("img", {
         src: _pomodoroTimer.default,
         alt: "pomodoro"
-      })));
+      })), _react.default.createElement("h1", {
+        className: "site-title"
+      }, "Pomodoro timer"));
     }
   }]);
 
@@ -24647,22 +24649,30 @@ function (_Component) {
     value: function render() {
       var _this = this;
 
-      return _react.default.createElement("div", {
-        className: "tile is-child my-btn is-2 notification"
-      }, _react.default.createElement("button", {
-        className: "button center is-light is-rounded",
-        onClick: function onClick() {
-          return _this.props.changeSession(_this.props.session - 1);
-        }
-      }, "-1"), _react.default.createElement("button", {
-        className: "button is-link is-rounded",
-        onClick: this.props.toggleEvent
-      }, this.props.start), _react.default.createElement("button", {
-        className: "button center is-light is-rounded",
+      var up;
+      var down;
+      this.props.toggle ? up = _react.default.createElement("button", {
+        className: "button btn is-primary center is-light is-rounded",
         onClick: function onClick() {
           return _this.props.changeSession(_this.props.session + 1);
         }
-      }, "+1"));
+      }, "+1") : up = _react.default.createElement("button", {
+        className: "button btn is-danger center is-light is-rounded"
+      }, "+1");
+      this.props.toggle ? down = _react.default.createElement("button", {
+        className: "button btn is-primary center is-light is-rounded",
+        onClick: function onClick() {
+          return _this.props.changeSession(_this.props.session - 1);
+        }
+      }, "-1") : down = _react.default.createElement("button", {
+        className: "button btn is-danger center is-light is-rounded"
+      }, "-1");
+      return _react.default.createElement("div", {
+        className: "tile is-child my-btns is-2 notification"
+      }, up, _react.default.createElement("button", {
+        className: "button is-link is-rounded",
+        onClick: this.props.toggleEvent
+      }, this.props.start), down);
     }
   }]);
 
@@ -24770,6 +24780,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -24800,6 +24812,7 @@ function (_Component) {
     _this.state = {
       seconds: '00',
       //initialized as string to be well displayed
+      minutes: 20,
       session: 0,
       // to increment the timer
       interval: '',
@@ -24816,7 +24829,7 @@ function (_Component) {
       // for the progress bar max
       inProgress: 100,
       // for the progress bar value
-      message: ['Start a work session', 'Good Work !', 'Time left...'],
+      message: ['Start a work session', 'Good Work ! Time left... '],
       endTime: 'modal',
       audio: '' // these functions are bound to be called in children components
 
@@ -24861,16 +24874,17 @@ function (_Component) {
 
       this.inProgress = this.seconds; // set the pogress bar value to the all seconds 
 
-      this.interval = setInterval(this.decreaseSeconds.bind(this), 1000); // stock the inerval's value and call function to decrease time
+      this.state.interval = setInterval(this.decreaseSeconds.bind(this), 1000); // stock the inerval's value and call function to decrease time
     }
   }, {
     key: "resetTimer",
     value: function resetTimer() {
       // to reset timer
-      clearInterval(this.interval);
+      clearInterval(this.state.interval);
       this.setState({
-        minutesLeft: 20,
-        secondsLeft: '00'
+        minutesLeft: this.state.minutes,
+        secondsLeft: '00',
+        toggle: true
       });
       this.progress = 100;
       this.inProgress = 100; // reset bar progress
@@ -24879,6 +24893,7 @@ function (_Component) {
     key: "toggleEvent",
     value: function toggleEvent() {
       // toggle button 
+      console.log(this.state.toggle);
       this.state.toggle ? this.startTimer() : this.resetTimer();
       this.state.toggle ? this.setState({
         content: 'Reset'
@@ -24894,7 +24909,13 @@ function (_Component) {
       this.session = newSession;
 
       if (newSession != 0) {
-        this.state.minutesLeft += newSession;
+        this.setState(function (state) {
+          var _ref;
+
+          return _ref = {
+            minutes: state.minutes += newSession
+          }, _defineProperty(_ref, "minutes", state.minutes), _defineProperty(_ref, "minutesLeft", state.minutes < 10 ? '0' + state.minutes : state.minutes), _ref;
+        });
       }
 
       this.setState({
@@ -24904,7 +24925,7 @@ function (_Component) {
   }, {
     key: "alertEndTime",
     value: function alertEndTime() {
-      if (this.seconds < 58) {
+      if (this.seconds < 115 && this.state.toggle == false) {
         this.resetTimer();
         this.setState({
           endTime: 'modal is-active'
@@ -24915,26 +24936,41 @@ function (_Component) {
     key: "closeModal",
     value: function closeModal() {
       this.setState({
-        endTime: 'modal',
-        toggle: true
+        content: 'Start',
+        endTime: 'modal'
       });
-      this.toggleEvent();
+      this.resetTimer();
     }
   }, {
     key: "restart",
     value: function restart() {
+      this.setState({
+        toggle: false
+      });
       this.closeModal();
-      this.startTimer();
+      this.resetTimer();
+      this.toggleEvent();
+      this.setState({
+        toggle: false
+      });
     }
   }, {
     key: "render",
     value: function render() {
+      var msg;
+
+      if (this.state.toggle) {
+        msg = this.state.message[0];
+      } else {
+        msg = this.state.message[1];
+      }
+
       return _react.default.createElement("div", {
         className: "App"
       }, _react.default.createElement("div", null, _react.default.createElement(_Header.default, null)), _react.default.createElement("div", {
         className: "container"
       }, _react.default.createElement(_Title.default, {
-        msg: this.state.message
+        msg: msg
       }), _react.default.createElement("div", {
         className: "tile is-ancestor center"
       }, _react.default.createElement("div", {
@@ -24942,16 +24978,17 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "tile center"
       }, _react.default.createElement("div", {
-        className: "tile is-child notification is-danger is-8"
+        className: "tile is-child notification clock is-8"
       }, _react.default.createElement("p", {
         className: "subtitle timer"
       }, this.state.minutesLeft, " : ", this.state.secondsLeft)), _react.default.createElement(_Button.default, {
         session: this.state.session,
         changeSession: this.changeSession,
+        toggle: this.state.toggle,
         toggleEvent: this.toggleEvent,
         start: this.state.content
       })), _react.default.createElement("div", {
-        className: "tile bar is-parent notification is-10"
+        className: "tile bar is-parent is-10"
       }, _react.default.createElement("progress", {
         className: "progress is-medium is-danger",
         value: this.inProgress,
@@ -25081,7 +25118,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41811" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43739" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

@@ -9,6 +9,7 @@ export default class Header extends Component {
         return (
             <nav className="navbar">
                 <figure className="image is-128x128"><img src={logo} alt="pomodoro" /></figure>
+                <h1 className="site-title">Pomodoro timer</h1>
             </nav>
         )
     }

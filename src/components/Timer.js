@@ -10,6 +10,7 @@ export default class Timer extends Component {
     super(props);
     this.state = {
       seconds: '00', //initialized as string to be well displayed
+      minutes: 20,
       session: 0, // to increment the timer
       interval: '', // to stop the timer
       secondsLeft: '00', // will be used to display in a range of 60
@@ -20,8 +21,7 @@ export default class Timer extends Component {
       inProgress: 100, // for the progress bar value
       message: [
         'Start a work session',
-        'Good Work !',
-        'Time left...'
+        'Good Work ! Time left... ',
       ],
       endTime: 'modal',
       audio: ''
@@ -59,20 +59,22 @@ export default class Timer extends Component {
     this.seconds = this.state.minutesLeft * 60; // all the seconds that are remaining
     this.progress = this.seconds; // set the pogress bar max to the all seconds 
     this.inProgress = this.seconds; // set the pogress bar value to the all seconds 
-    this.interval = setInterval((this.decreaseSeconds.bind(this)), 1000); // stock the inerval's value and call function to decrease time
+    this.state.interval = setInterval((this.decreaseSeconds.bind(this)), 1000); // stock the inerval's value and call function to decrease time
   }
 
   resetTimer() { // to reset timer
-    clearInterval(this.interval);
+    clearInterval(this.state.interval);
     this.setState({
-      minutesLeft: 20,
+      minutesLeft: this.state.minutes,
       secondsLeft: '00',
+      toggle: true,
     })
     this.progress = 100;
     this.inProgress = 100; // reset bar progress
   }
 
   toggleEvent() { // toggle button 
+    console.log(this.state.toggle);
     this.state.toggle ? this.startTimer() : this.resetTimer();
     this.state.toggle ? this.setState({ content: 'Reset' }) : this.setState({ content: 'Start' });
     this.state.toggle = !this.state.toggle;
@@ -81,15 +83,20 @@ export default class Timer extends Component {
   changeSession(newSession) { // to in/de_crement the timer
     this.session = newSession;
     if (newSession != 0) {
-      this.state.minutesLeft += newSession;
+      this.setState((state) => ({
+        minutes: state.minutes += newSession,
+        minutes: state.minutes,
+        minutesLeft: state.minutes < 10 ? '0' + state.minutes : state.minutes
+      }))
     }
     this.setState({
       session: 0,
     })
+
   }
 
   alertEndTime() {
-    if (this.seconds < 58) {
+    if (this.seconds < 115 && this.state.toggle == false) {
       this.resetTimer();
       this.setState({
         endTime: 'modal is-active'
@@ -99,32 +106,45 @@ export default class Timer extends Component {
 
   closeModal() {
     this.setState({
+      content: 'Start',
       endTime: 'modal',
-      toggle: true
     });
-    this.toggleEvent();
+    this.resetTimer();
   }
 
   restart() {
+    this.setState({ toggle: false });
     this.closeModal();
-    this.startTimer();
+    this.resetTimer();
+    this.toggleEvent();
+    this.setState({ toggle: false });
+
   }
 
   render() {
+    let msg;
+    if (this.state.toggle) {
+      msg = this.state.message[0];
+    }
+    else {
+      msg = this.state.message[1];
+    }
+
     return (
+
       <div className="App">
         <div><Header /></div>
         <div className="container">
-          <Title msg={this.state.message} />
+          <Title msg={msg} />
           <div className="tile is-ancestor center">
             <div className="tile is-parent is-vertical notification is-warning is-10" >
               <div className="tile center">
-                <div className="tile is-child notification is-danger is-8">
+                <div className="tile is-child notification clock is-8">
                   <p className="subtitle timer" >{this.state.minutesLeft} : {this.state.secondsLeft}</p>
                 </div>
-                <Button session={this.state.session} changeSession={this.changeSession} toggleEvent={this.toggleEvent} start={this.state.content} />
+                <Button session={this.state.session} changeSession={this.changeSession} toggle={this.state.toggle} toggleEvent={this.toggleEvent} start={this.state.content} />
               </div>
-              <div className="tile bar is-parent notification is-10">
+              <div className="tile bar is-parent is-10">
                 <progress className="progress is-medium is-danger" value={this.inProgress} max={this.progress}></progress>
               </div>
               <Modal end={this.state.endTime} restart={this.restart} close={this.closeModal} />

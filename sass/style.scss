@@ -3,6 +3,9 @@ $bg : hsl(0, 0%, 29%);
 body, html {
     background-color: $bg;
 }
+.site-title h1 {
+    padding: 1rem 0 0 O;
+}
 .my-title {
     padding-left: 5rem;
     color: whitesmoke;
@@ -13,7 +16,6 @@ body, html {
 }
 .timer {
     justify-content: center;
-    color: white;
     font-size: 10rem;
     display: flex;
     flex-direction: row;
@@ -28,6 +30,20 @@ body, html {
 .is-ancestor {
     margin-top: 3rem!important;
 }
-.my-btn {
+.my-btns {
     justify-content: middle;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+}
+.clock {
+    border-right: 1px solid #FED6D7;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.btn {
+    margin: 2rem 0;
+    border-color: 1px solid #FED6D7;
+    background-color: aqua;
 }
