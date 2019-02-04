@@ -2,13 +2,15 @@
   "name": "pomodoro",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build ./src/index.html -d docs --public-url ./"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "homepage": "https://rafacolsn.github.io/pomodoro/",
   "dependencies": {
     "Hello": "0.0.1",
     "assets": "^3.0.1",
