@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Timer from './components/Timer';
-import '../sass/style.scss';
+import React from "react";
+import ReactDOM from "react-dom";
+import Timer from "./components/Timer";
+import "../sass/style.scss";
 
-ReactDOM.render(<Timer />, document.getElementById('root'));
+ReactDOM.render(<Timer />, document.getElementById("root"));

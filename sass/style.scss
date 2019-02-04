@@ -1,49 +1,49 @@
-$bg : hsl(0, 0%, 29%);
+$bg: hsl(0, 0%, 29%);
 
-body, html {
-    background-color: $bg;
+body,
+html {
+  background-color: $bg;
 }
 .site-title h1 {
-    padding: 1rem 0 0 O;
+  padding: 1rem 0 0 O;
 }
 .my-title {
-    padding-left: 5rem;
-    color: whitesmoke;
+  padding-left: 5rem;
+  color: whitesmoke;
 }
 .navbar {
-    height: 0rem;
-    margin-bottom: 3rem;
+  height: 0rem;
+  margin-bottom: 3rem;
 }
 .timer {
-    justify-content: center;
-    font-size: 10rem;
-    display: flex;
-    flex-direction: row;
+  justify-content: center;
+  font-size: 10rem;
+  display: flex;
+  flex-direction: row;
 }
 .center {
-    justify-content: center;
-    text-align: center;
+  justify-content: center;
+  text-align: center;
 }
 .bar {
-    margin: 1rem auto;
+  margin: 1rem auto;
 }
 .is-ancestor {
-    margin-top: 3rem!important;
+  margin-top: 3rem !important;
 }
 .my-btns {
-    justify-content: middle;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-
+  justify-content: middle;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .clock {
-    border-right: 1px solid #FED6D7;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
+  border-right: 1px solid #fed6d7;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 .btn {
-    margin: 2rem 0;
-    border-color: 1px solid #FED6D7;
-    background-color: aqua;
+  margin: 2rem 0;
+  border-color: 1px solid #fed6d7;
+  background-color: aqua;
 }
